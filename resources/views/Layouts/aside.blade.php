@@ -33,7 +33,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="./index.html" class="nav-link active">
+                            <a href="{{ route('flatcrud.create') }}" class="nav-link active">
                                 <i class="bi bi-building-fill-add nav-icon"></i>
                                 <p>Add details</p>
                             </a>
