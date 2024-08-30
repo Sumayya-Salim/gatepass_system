@@ -30,6 +30,8 @@
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    @stack('style')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -116,8 +118,14 @@
     <script src="{{ asset('dist/js/demo.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
-
     @stack('scripts')
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.12.0/sweetalert2.min.js"
+        integrity="sha512-iTSP2McqQzzin4TwBzVD2vGe2cKB9VxC6zouXB3J7enM/dblekPHIsJBMm0YGrZnyq1sTv/dGwo7oLY4nuRPGQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
 
 </html>
