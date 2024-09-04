@@ -99,6 +99,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Custom Auth Script -->
     <script>
         const CARD_LOGIN_URL = "{{ route('auth.login') }}";
+        const REDIRECTED_URL = "{{ route('flatcrud.index') }}";
+
     </script>
     <script src="{{ asset('assests/js/auth/auth.js') }}"></script>
 
