@@ -58,7 +58,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const dashboard_url = "{{ route('flatguest.index') }}";
-        const OTP_VERIFY = "{{ route('securtycheck.otpverify') }}";
+        const OTP_VERIFY = "{{ route('securitycheck.otpverify') }}";
 
     </script>
     <script src="{{ asset('assets/js/otp/otpverify.js') }}"></script>
