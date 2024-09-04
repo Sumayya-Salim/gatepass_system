@@ -139,4 +139,6 @@ class FlatcrudCrontroller extends Controller
         $flat = Flat::findOrFail($id);
         $flat->delete();
     }
+
+    
 }

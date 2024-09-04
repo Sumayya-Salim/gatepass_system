@@ -83,23 +83,24 @@
                     <a href="#" class="nav-link">
                         <i class="bi bi-person-fill nav-icon "></i>
                         <p>
-                            Guest
+                            Guest Details
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                        <a href="{{route('flatguest.index')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Guest List</p>
+                        </a>
+                    </li>
                         <li class="nav-item">
-                            <a href="pages/charts/chartjs.html" class="nav-link">
+                            <a href="{{route('flatguest.create')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>details</p>
+                                <p>Entry Form</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="pages/charts/flot.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>OTP</p>
-                            </a>
-                        </li>
+                        
 
                     </ul>
                 </li>
@@ -112,16 +113,11 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        
                         <li class="nav-item">
-                            <a href="pages/UI/general.html" class="nav-link">
+                            <a href="{{route('securtycheck.otpview')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Add guest details</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="pages/UI/icons.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Otp verification</p>
+                                <p>OTP Verification</p>
                             </a>
                         </li>
                         {{-- <li class="nav-item">
