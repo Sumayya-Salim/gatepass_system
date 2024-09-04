@@ -38,12 +38,12 @@
                                 <p>Add details</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="./index2.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Edit details</p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="./index3.html" class="nav-link">
                                 <i class="bi bi-x-circle-fill nav-icon"></i>
@@ -54,27 +54,34 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('owner_crud.index') }}" class="nav-link">
+                      
                         <i class="nav-icon fas fa-copy"></i>
                         <p>
                             Flat Owners and Details
                             <i class="fas fa-angle-left right"></i>
-                            {{-- <span class="badge badge-info right">6</span> --}}
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="pages/layout/top-nav.html" class="nav-link">
+                            <a href="{{ route('owner_crud.index') }}" class="nav-link">
+                                <i class="bi bi-building-fill-add nav-icon"></i>
+                                <p>All Details</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('owner_crud.create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Add New Members</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>edit</p>
                             </a>
-                        </li>
+                        </li> --}}
 
 
                     </ul>
@@ -157,7 +164,7 @@
                 </a>
               </li> --}}
                     </ul>
-                </li>
+                </li> 
                 {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>

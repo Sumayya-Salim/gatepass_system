@@ -20,7 +20,7 @@ class DemoMail extends Mailable
     public function __construct($email,$verificationlink)
     {
         $this->email = $email;
-        $this->verificationlink =$verificationlink;
+        $this->verificationlink = $verificationlink;
     }
 
     /**
