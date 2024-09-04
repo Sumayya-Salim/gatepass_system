@@ -12,6 +12,7 @@ class Gatepass extends Model
     protected $fillable = [
         'user_id',
         'visitor_name',
+        'visitor_email',
         'visitor_phoneno',
         'purpose',
         'entry_time',
@@ -19,4 +20,9 @@ class Gatepass extends Model
         'status',
         'otp',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 }
