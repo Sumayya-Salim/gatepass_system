@@ -122,7 +122,7 @@
                     <ul class="nav nav-treeview">
                         
                         <li class="nav-item">
-                            <a href="{{route('securtycheck.otpview')}}" class="nav-link">
+                            <a href="{{route('securitycheck.otpview')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>OTP Verification</p>
                             </a>
@@ -163,17 +163,23 @@
                   <p>Ribbons</p>
                 </a>
               </li> --}}
+
+
                     </ul>
                 </li> 
-                {{-- <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+                 <li class="nav-item">
+            <a href="{{ route('logout') }}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+
               <p>
-                Forms
-                <i class="fas fa-angle-left right"></i>
+                logout
+                
               </p>
             </a>
-            <ul class="nav nav-treeview">
+                 </li>
+
+
+            {{-- <ul class="nav nav-treeview"> 
               <li class="nav-item">
                 <a href="pages/forms/general.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
