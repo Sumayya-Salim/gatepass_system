@@ -1,7 +1,7 @@
 @extends('Layouts.layouts')
 @section('content')
     <div class="d-flex justify-content-end mt-2">
-        <a href="{{ URL::route('flatcrud.index') }}"><button class="btn btn-primary">BACK</button></a><br><br>
+        <a href="{{ URL::route('owner_crud.index') }}"><button class="btn btn-primary">BACK</button></a><br><br>
     </div>
     <!-- left column -->
     <div class="container">
