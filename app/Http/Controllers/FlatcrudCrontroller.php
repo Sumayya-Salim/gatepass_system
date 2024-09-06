@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreflatRequest;
 use App\Models\Flat;
 use App\Services\FlatcrudServices;
 use Exception;
@@ -66,7 +67,7 @@ class FlatcrudCrontroller extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreflatRequest $request)
     {
         try {
             $flatData = $this->flatCrudService->storeFlat($request);

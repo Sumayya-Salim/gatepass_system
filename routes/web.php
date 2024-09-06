@@ -54,15 +54,15 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
         Route::get('{id}/destroy', [OwnercrudController::class, 'destroy'])->name('destroy');
         Route::get('{id}/show', [OwnercrudController::class, 'show'])->name('show');
     });
-    // Route::prefix('security')->name('security.')->group(function () {
-    //     Route::get('/', [SecurityController::class, 'index'])->name('index');
-    //     Route::get('create', [SecurityController::class, 'create'])->name('create');
-    //     Route::post('store', [SecurityController::class, 'store'])->name('store');
-    //     Route::get('edit/{id}', [SecurityController::class, 'edit'])->name('edit');
-    //     Route::put('{id}/update', [SecurityController::class, 'update'])->name('update');
-    //     Route::get('{id}/destroy', [SecurityController::class, 'destroy'])->name('destroy');
+    Route::prefix('security')->name('security.')->group(function () {
+        Route::get('/', [SecurityController::class, 'index'])->name('index');
+        Route::get('create', [SecurityController::class, 'create'])->name('create');
+        Route::post('store', [SecurityController::class, 'store'])->name('store');
+        Route::get('edit/{id}', [SecurityController::class, 'edit'])->name('edit');
+        Route::put('{id}/update', [SecurityController::class, 'update'])->name('update');
+        Route::get('{id}/destroy', [SecurityController::class, 'destroy'])->name('destroy');
        
-    // });
+    });
 });
 
  Route::prefix('reset')->name('reset.')->group(function () {

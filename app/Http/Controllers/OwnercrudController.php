@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreflatownerRequest;
 use App\Models\Flat;
 use App\Models\FlatOwnerDetail;
+use App\Models\User;
 use FFI\Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
 class OwnercrudController extends Controller
@@ -57,22 +60,34 @@ class OwnercrudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreflatownerRequest $request)
     {
         $flat = Flat::find($request->flat_no);
 
         // Check if the flat exists
         if ($flat) {
-            // Create a new FlatOwnerDetail instance
-            $ownerdetails = new FlatOwnerDetail();
-            $ownerdetails->owner_name = $request->owner_name;
-            $ownerdetails->flat_id = $flat->id; // Store the flat_id from the flats table
-            $ownerdetails->park_slott = $request->park_slott;
-            $ownerdetails->members = $request->members;
+            $user = new User();
+            $user->name = $request->owner_name;
+            $user->email = $request->email;
+            $user->phoneno = $request->phoneno;
+            $user->password =Hash::make($request->password);
+            $user->role = 2 ;
+            $user->save();
+
+            // Store the remaining details in the flatownerdetails table
+            $flatOwnerDetails = new FlatOwnerDetail();
+            $flatOwnerDetails->user_id = $user->id; // foreign key from users table
+            $flatOwnerDetails->owner_name = $request->owner_name;
+            $flatOwnerDetails->flat_id = $flat->id; // Store the flat_id from the flats table
+            $flatOwnerDetails->members = $request->members;
+            $flatOwnerDetails->park_slott = $request->park_slott;
+            $flatOwnerDetails->save();
+
+           
 
             try {
                 // Save the details to the database
-                $ownerdetails->save();
+                $flatOwnerDetails->save();
 
                 // Return a success response
                 return response()->json([
@@ -124,7 +139,7 @@ class OwnercrudController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+
         $ownerdetails = FlatOwnerDetail::find($id);
 
         // Check if the record exists
@@ -150,7 +165,7 @@ class OwnercrudController extends Controller
                         'message' => 'Flat details successfully updated'
                     ], 200);
                 } catch (\Exception $e) {
-                 
+
                     return response()->json([
                         'status' => 'error',
                         'message' => 'An error occurred while updating the flat details',
@@ -158,14 +173,14 @@ class OwnercrudController extends Controller
                     ], 500);
                 }
             } else {
-               
+
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Flat not found'
                 ], 404);
             }
         } else {
-         
+
             return response()->json([
                 'status' => 'error',
                 'message' => 'Owner details not found'
