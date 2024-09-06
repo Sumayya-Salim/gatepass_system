@@ -6,6 +6,7 @@ use App\Http\Controllers\FlatcrudCrontroller;
 use App\Http\Controllers\FlatguestController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\OwnercrudController;
+use App\Http\Controllers\SecurityController;
 use App\Http\Middleware\AuthenticateMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -17,12 +18,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
 Route::middleware(AuthenticateMiddleware::class)->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::prefix('reset')->name('reset.')->group(function () {
-        Route::get('/', [ForgotPasswordController::class, 'index'])->name('index');
-        Route::post('/check', [ForgotPasswordController::class, 'check'])->name('check');
-        Route::get('/edit/{uuid}', [ForgotPasswordController::class, 'edit'])->name('edit');
-        Route::post('/updatepassword', [ForgotPasswordController::class, 'updatepassword'])->name('updatepassword');
-    });
+   
 
     Route::prefix('flatcrud')->name('flatcrud.')->group(function () {
         Route::get('/', [FlatcrudCrontroller::class, 'index'])->name('index');
@@ -58,8 +54,23 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
         Route::get('{id}/destroy', [OwnercrudController::class, 'destroy'])->name('destroy');
         Route::get('{id}/show', [OwnercrudController::class, 'show'])->name('show');
     });
+    Route::prefix('security')->name('security.')->group(function () {
+        Route::get('/', [SecurityController::class, 'index'])->name('index');
+        Route::get('create', [SecurityController::class, 'create'])->name('create');
+        Route::post('store', [SecurityController::class, 'store'])->name('store');
+        Route::get('edit/{id}', [SecurityController::class, 'edit'])->name('edit');
+        Route::put('{id}/update', [SecurityController::class, 'update'])->name('update');
+        Route::get('{id}/destroy', [SecurityController::class, 'destroy'])->name('destroy');
+       
+    });
 });
 
+ Route::prefix('reset')->name('reset.')->group(function () {
+        Route::get('/', [ForgotPasswordController::class, 'index'])->name('index');
+        Route::post('/check', [ForgotPasswordController::class, 'check'])->name('check');
+        Route::get('/edit/{uuid}', [ForgotPasswordController::class, 'edit'])->name('edit');
+        Route::post('/updatepassword', [ForgotPasswordController::class, 'updatepassword'])->name('updatepassword');
+    });
 Route::fallback(function () {
     abort(404);
 });

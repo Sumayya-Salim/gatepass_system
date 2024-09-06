@@ -10,7 +10,7 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h2 class="card-title">Parking Form</h2>
+                        <h2 class="card-title">OWNER DETAILS</h2>
                     </div>
                     <!-- /.card-header -->
 
@@ -19,6 +19,18 @@
                         <div class="form-group mb-3">
                             <label for="owner_name" class="form-label">Owner Name</label>
                             <input type="text" class="form-control" id="owner_name" name="owner_name">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Owner Email</label>
+                            <input type="text" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phoneno" class="form-label">Phone no</label>
+                            <input type="number" class="form-control" id="phoneno" name="phoneno">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
                         </div>
 
                         <div class="form-group mb-3">
@@ -31,7 +43,7 @@
                             </select>
                         </div>
 
-                       
+
 
                         <div class="form-group" id="members_section">
                             <label for="members" class="form-label">Number of Members</label>

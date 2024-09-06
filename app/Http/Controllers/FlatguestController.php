@@ -103,11 +103,7 @@ class FlatguestController extends Controller
     }
     public function otpverify(Request $request)
     {
-        // Validate the input fields
-        $request->validate([
-            'email' => 'required|email',
-            'otp' => 'required|integer',
-        ]);
+        
 
         $email = $request->input('email');
         $otp = $request->input('otp');
