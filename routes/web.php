@@ -19,7 +19,7 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
    
-
+    Route::middleware('role:1')->group(function () {
     Route::prefix('flatcrud')->name('flatcrud.')->group(function () {
         Route::get('/', [FlatcrudCrontroller::class, 'index'])->name('index');
         Route::get('create', [FlatcrudCrontroller::class, 'create'])->name('create');
@@ -29,7 +29,8 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
         Route::get('{id}/destroy', [FlatcrudCrontroller::class, 'destroy'])->name('destroy');
         Route::get('{id}/show', [FlatcrudCrontroller::class, 'show'])->name('show');
     });
-
+});
+    Route::middleware('role:1,2')->group(function () {
     Route::prefix('flatguest')->name('flatguest.')->group(function () {
         Route::get('/', [FlatguestController::class, 'index'])->name('index');
         Route::get('create', [FlatguestController::class, 'create'])->name('create');
@@ -39,11 +40,14 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
         Route::get('{id}/destroy', [FlatguestController::class, 'destroy'])->name('destroy');
         Route::put('{id}/update', [FlatguestController::class, 'update'])->name('update');
     });
-
+});
+    
+    Route::middleware('role:3')->group(function () {
     Route::prefix('securitycheck')->name('securitycheck.')->group(function () {
         Route::get('otpview', [FlatguestController::class, 'otpview'])->name('otpview');
         Route::post('otpverify', [FlatguestController::class, 'otpverify'])->name('otpverify');
     });
+});
 
     Route::prefix('ownercrud')->name('owner_crud.')->group(function () {
         Route::get('/', [OwnercrudController::class, 'index'])->name('index');
