@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +13,10 @@ class AuthController extends Controller
     public function index()
     {
         return view('auth.index');
+    }
+    public function dashboard()
+    {
+        return view('auth.dashboard');
     }
 
     // Handle login process
@@ -28,22 +32,26 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         // Attempt to log the user in
-        if (Auth::attempt($credentials)) {
-            // If successful, retrieve the authenticated user and their role
-            $user = Auth::user();
-            $role = $user->role;
+      // Attempt to log the user in
+    if (Auth::attempt($credentials)) {
+        // If successful, retrieve the authenticated user and their role
+        $user = Auth::user();
+        $role = $user->role;
 
-            // Store the user's role in the session for use in views
-            Session::put('role', $role);
+        // Store the user's role in the session for use in views
+        Session::put('role', $role);
 
-            // Redirect to the appropriate view based on user role
-            return redirect()->route('flatcrud.index')->with('success', 'Login successful');
-        } else {
-            // Return error response if authentication fails
-            return back()->withErrors([
-                'email' => 'Invalid email or password.',
-            ])->onlyInput('email');
-        }
+        // Redirect to the appropriate view based on user role
+        return redirect()->route('dashboard')->with('success', 'Login successful');
+    } else {
+        // Log failed login attempt
+        Log::warning("Login failed with:', $credentials");
+       
+        // Return error response if authentication fails
+        return back()->withErrors([
+            'email' => 'Invalid email or password.',
+        ])->onlyInput('email');
+    }
     }
 
     // Handle logout process
