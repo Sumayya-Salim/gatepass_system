@@ -11,123 +11,134 @@
     <div class="sidebar">
 
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-
-
+            <!-- Add User Info Here -->
         </div>
-
-
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <a href="#" class="nav-link active">
-                        <i class="bi bi-buildings-fill nav-icon"></i>
-                        <p>
-                            Flat details
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('flatcrud.create') }}" class="nav-link active">
-                                <i class="bi bi-building-fill-add nav-icon"></i>
-                                <p>Add details</p>
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a href="./index2.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Edit details</p>
-                            </a>
-                        </li> --}}
-                        <li class="nav-item">
-                            <a href="./index3.html" class="nav-link">
-                                <i class="bi bi-x-circle-fill nav-icon"></i>
-                                <p>Delete details</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('owner_crud.index') }}" class="nav-link">
-                      
-                        <i class="nav-icon fas fa-copy"></i>
-                        <p>
-                            Flat Owners and Details
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('owner_crud.index') }}" class="nav-link">
-                                <i class="bi bi-building-fill-add nav-icon"></i>
-                                <p>All Details</p>
-                            </a>
-                        </li>
+                <!-- Admin and Security Access: Flat Details -->
+                @if (Auth::user()->role == 1 || Auth::user()->role == 3)
+                    <li class="nav-item ">
+                        <a href="#" class="nav-link active">
+                            <i class="bi bi-buildings-fill nav-icon"></i>
+                            <p>
+                                Flat details
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('flatcrud.create') }}" class="nav-link active">
+                                    <i class="bi bi-building-fill-add nav-icon"></i>
+                                    <p>Add details</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./index3.html" class="nav-link">
+                                    <i class="bi bi-x-circle-fill nav-icon"></i>
+                                    <p>Delete details</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
-                        <li class="nav-item">
-                            <a href="{{ route('owner_crud.create') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Add New Members</p>
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item">
-                            <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>edit</p>
-                            </a>
-                        </li> --}}
+                <!-- Flat Owners and Details: Accessible to Admin and Flat Owner -->
+                @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+                    <li class="nav-item">
+                        <a href="{{ route('owner_crud.index') }}" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Flat Owners and Details
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('owner_crud.index') }}" class="nav-link">
+                                    <i class="bi bi-building-fill-add nav-icon"></i>
+                                    <p>All Details</p>
+                                </a>
+                            </li>
 
+                            <li class="nav-item">
+                                <a href="{{ route('owner_crud.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Add New Members</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
 
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-person-fill nav-icon "></i>
-                        <p>
-                            Guest Details
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                      <li class="nav-item">
-                        <a href="{{route('flatguest.index')}}" class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Guest List</p>
+                <!-- Guest Details: Admin, Security, and Flat Owner Access -->
+                @if (Auth::user()->role == 1 || Auth::user()->role == 2 || Auth::user()->role == 3)
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-person-fill nav-icon"></i>
+                            <p>
+                                Guest Details
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('flatguest.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Guest List</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('flatguest.create') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Entry Form</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+
+                <!-- Security Check: Only Security Role -->
+                @if (Auth::user()->role == 3)
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon bi bi-lock-fill"></i>
+                            <p>
+                                Security Check
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('securitycheck.otpview') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>OTP Verification</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('logout') }}" class="nav-link">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+
+                            <p>
+                                logout
+
+                            </p>
                         </a>
                     </li>
-                        <li class="nav-item">
-                            <a href="{{route('flatguest.create')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Entry Form</p>
-                            </a>
-                        </li>
-                        
 
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon bi bi-lock-fill"></i>
-                        <p>
-                            Security Check
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        
-                        <li class="nav-item">
-                            <a href="{{route('securitycheck.otpview')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>OTP Verification</p>
-                            </a>
-                        </li>
-                        {{-- <li class="nav-item">
+
+            </ul>
+            @endif
+
+        </nav>
+    </div>
+
+    {{-- <li class="nav-item">
                 <a href="pages/UI/buttons.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buttons</p>
@@ -165,21 +176,21 @@
               </li> --}}
 
 
-                    </ul>
-                </li> 
-                 <li class="nav-item">
-            <a href="{{ route('logout') }}" class="nav-link">
-              <i class="nav-icon fas fa-sign-out-alt"></i>
+    </ul>
+    </li>
+    <li class="nav-item">
+        <a href="{{ route('logout') }}" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
 
-              <p>
+            <p>
                 logout
-                
-              </p>
-            </a>
-                 </li>
+
+            </p>
+        </a>
+    </li>
 
 
-            {{-- <ul class="nav nav-treeview"> 
+    {{-- <ul class="nav nav-treeview"> 
               <li class="nav-item">
                 <a href="pages/forms/general.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -611,8 +622,8 @@
             </a>
           </li>
         </ul> --}}
-        </nav>
-        <!-- /.sidebar-menu -->
+    </nav>
+    <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
