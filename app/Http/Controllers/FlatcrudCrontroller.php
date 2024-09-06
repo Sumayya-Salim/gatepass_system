@@ -4,43 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreflatRequest;
 use App\Models\Flat;
+use App\Services\FlatcrudServices;
 use Exception;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class FlatcrudCrontroller extends Controller
 {
+    private $flatCrudService;
+    public function __construct(FlatcrudServices $flatCrudService)
+    {
+        $this->flatCrudService = $flatCrudService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if ($request->ajax()) {
-            $data = Flat::all();
+        try {
 
-            return DataTables::of($data)
-                ->addIndexColumn()
+            if ($request->ajax()) {
+                $data = Flat::all();
 
-                ->editColumn('flat_type', function ($row) {
-                    return config('constants.flat_type.' . $row->flat_type);
-                })
-                ->editColumn('furniture_type', function ($row) {
-                    return config('constants.furniture_type.' . $row->furniture_type);
-                })
-                ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('flatcrud.show', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">SHOW</a>';
-                    $btn .= ' <a href="' . route('flatcrud.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
-                    $btn .= ' <a href="' . route('flatcrud.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm">DELETE</a>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+                return DataTables::of($data)
+                    ->addIndexColumn()
+
+                    ->editColumn('flat_type', function ($row) {
+                        return config('constants.flat_type.' . $row->flat_type);
+                    })
+                    ->editColumn('furniture_type', function ($row) {
+                        return config('constants.furniture_type.' . $row->furniture_type);
+                    })
+                    ->addColumn('action', function ($row) {
+                        $btn = '<a href="' . route('flatcrud.show', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">SHOW</a>';
+                        $btn .= ' <a href="' . route('flatcrud.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
+                        $btn .= ' <a href="' . route('flatcrud.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm">DELETE</a>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+
+            $flat_type = config('constants.flat_type');
+            $furniture_type = config('constants.furniture_type');
+
+            return view('flatcrud.index', compact('flat_type', 'furniture_type'));
+        } catch (Exception $e) {
+            report($e);
         }
-
-        $flat_type = config('constants.flat_type');
-        $furniture_type = config('constants.furniture_type');
-
-        return view('flatcrud.index', compact('flat_type', 'furniture_type'));
     }
 
     /**
@@ -59,20 +70,13 @@ class FlatcrudCrontroller extends Controller
     public function store(StoreflatRequest $request)
     {
         try {
-
-            // Create a new Flat entry
-            $flat = new Flat();
-            $flat->flat_no = $request->flat_no;
-            $flat->flat_type = $request->flat_type;
-            $flat->furniture_type = $request->furniture_type;
-
-            // Save the flat details
-            $flat->save();
+            $flatData = $this->flatCrudService->storeFlat($request);
 
             // Return success response
             return response()->json([
                 'status' => 'success',
-                'message' => 'Flat details successfully stored'
+                'message' => 'Flat details successfully stored',
+                'data'  => $flatData
             ], 200);
         } catch (Exception $e) {
             report($e);
@@ -103,7 +107,7 @@ class FlatcrudCrontroller extends Controller
         $flat = Flat::findOrFail($id);
         $flat_type = config('constants.flat_type'); // Assuming flat types are stored in a config file
         $furniture_type = config('constants.furniture_type');
-        return view('flatcrud.edit', compact('flat','flat_type','furniture_type'));
+        return view('flatcrud.edit', compact('flat', 'flat_type', 'furniture_type'));
     }
 
     /**
@@ -112,16 +116,12 @@ class FlatcrudCrontroller extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            $flat = Flat::findOrFail($id);
-            $flat->flat_no = $request->flat_no;
-            $flat->flat_type = $request->flat_type;
-            $flat->furniture_type = $request->furniture_type;
 
-            $flat->save();
-
+            $flatData = $this->flatCrudService->updateFlat($id, $request);
             return response()->json([
                 'status' => 'success',
-                'message' => 'Flat details successfully updated'
+                'message' => 'Flat details successfully updated',
+                'data' => $flatData
             ], 200);
         } catch (Exception $e) {
             report($e);
@@ -137,9 +137,6 @@ class FlatcrudCrontroller extends Controller
      */
     public function destroy(string $id)
     {
-        $flat = Flat::findOrFail($id);
-        $flat->delete();
+        $this->flatCrudService->deleteFlat($id);
     }
-
-    
 }
