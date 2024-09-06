@@ -5,6 +5,7 @@ return [
         '2' => '2BHK',
         '3' => '3BHK',
     ],
+
     'furniture_type' => [
         '1' => 'Fully Furnished',
         '2' => 'Semi Furnished',
