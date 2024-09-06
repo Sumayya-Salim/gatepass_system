@@ -52,22 +52,22 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response) {
                         Swal.fire({
-                            icon:'success',
-                            title:'Login Successful',
+                            icon: 'success',
+                            title: 'Login Successful',
                             timer: 2000,
                             showConfirmButton: false
                         }).then(function () {
                             window.location.href = REDIRECTED_URL;
                         });
-                
-                        } else if (response) {
+
+                    } else if (response) {
                         Swal.fire({
-                            title:'Account Inactive',
+                            title: 'email/password incorrect',
                             text: response.message,
                             icon: 'warning',
                             confirmButtonText: 'OK'
                         });
-                    } 
+                    }
                 },
                 error: function (xhr) {
                     Swal.fire({

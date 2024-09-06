@@ -3,19 +3,24 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    public function handle(Request $request, Closure $next, $role)
+    public function handle($request, Closure $next, ...$roles)
     {
-        // Check if user is logged in and their role matches
-        if (Auth::check() && Auth::user()->role === $role) {
-            return $next($request);
+        if (!Auth::check()) {
+            return redirect()->route('auth.index'); // If not logged in, redirect to login
         }
 
-        // If role doesn't match, redirect to a 403 page or login
-        return redirect('/forbidden');
+        $userRole = Auth::user()->role; // Get user role from Auth
+
+        // Check if user role is in the allowed roles
+        if (!in_array($userRole, $roles)) {
+            return redirect()->route('dashboard')->with('error', 'You do not have permission to access this page.'); // Redirect to dashboard
+        }
+        
+
+        return $next($request);
     }
 }
