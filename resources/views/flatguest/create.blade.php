@@ -22,7 +22,8 @@
                             <div class="form-group">
                                 <label for="user_id">User ID</label>
                                 <select class="form-control" id="user_id" name="user_id">
-                                    <option>Select User</option>
+
+                                    <option value="">Select User</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
@@ -38,14 +39,14 @@
 
                             <div class="form-group">
                                 <label for="visitor_email">Visitor Email</label>
-                                <input type="text" class="form-control" id="visitor_email" name="visitor_email"
+                                <input type="email" class="form-control" id="visitor_email" name="visitor_email"
                                     placeholder="Enter Visitor Email">
                             </div>
 
                             <!-- Visitor Phone Number -->
                             <div class="form-group">
                                 <label for="visitor_phoneno">Visitor Phone Number</label>
-                                <input type="text" class="form-control" id="visitor_phoneno" name="visitor_phoneno"
+                                <input type="Number" class="form-control" id="visitor_phoneno" name="visitor_phoneno"
                                     placeholder="Enter Visitor Phone Number">
                             </div>
 
@@ -90,7 +91,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const dashboard_url = "{{ route('flatguest.index') }}";
-        const generateOtpUrl = "{{ route('flatguest.generate.otp')}}";
+        const generateOtpUrl = "{{ route('flatguest.generate.otp') }}";
     </script>
 
     <script src="{{ asset('assets/js/flatguest/create.js') }}"></script>

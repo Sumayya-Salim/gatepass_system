@@ -36,7 +36,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             {{-- <button type="submit" class="btn btn-info">Sign in</button> --}}
-                            <button type="submit" class="btn btn-success float-right">Submit</button>
+                            <button type="submit" class="btn btn-success float-right" id="submitBtn">Submit</button>
                         </div>
                         <!-- /.card-footer -->
                     </form>

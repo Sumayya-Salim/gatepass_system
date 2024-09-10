@@ -10,7 +10,7 @@
                     <!-- Main Dashboard Content -->
                     <div class="card">
                         <div class="card-body">
-                            <h2><strong>Welcome......</strong></h2>
+                            <h2>Welcome,{{ Auth::user()->email }}!</h2>
                             
                         </div>
                     </div>

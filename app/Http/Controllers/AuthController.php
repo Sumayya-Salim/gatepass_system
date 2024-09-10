@@ -22,37 +22,38 @@ class AuthController extends Controller
     // Handle login process
     public function login(StoreUserRequest $request)
     {
-        // Validate user input
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
-        // Retrieve credentials for authentication
-        $credentials = $request->only('email', 'password');
-
-        // Attempt to log the user in
-      // Attempt to log the user in
-    if (Auth::attempt($credentials)) {
-        // If successful, retrieve the authenticated user and their role
-        $user = Auth::user();
-        $role = $user->role;
-
-        // Store the user's role in the session for use in views
-        Session::put('role', $role);
-
-        // Redirect to the appropriate view based on user role
-        return redirect()->route('dashboard')->with('success', 'Login successful');
-    } else {
-        // Log failed login attempt
-        Log::warning("Login failed with:', $credentials");
        
-        // Return error response if authentication fails
-        return back()->withErrors([
-            'email' => 'Invalid email or password.',
-        ])->onlyInput('email');
+    
+        
+        $credentials = $request->only('email', 'password');
+    
+        // Attempt to log in the user
+        if (Auth::attempt($credentials)) {
+         
+            $user = Auth::user();
+            $role = $user->role;
+    
+            // Store the user's role in the session for use in views
+            Session::put('role', $role);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Login successful',
+                'redirect_url' => route('dashboard'), // Modify to your actual dashboard route
+            ]);
+        } else {
+            // Log the failed login attempt
+            Log::warning("Login failed with credentials: " . json_encode($credentials));
+    
+          
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid email or password.',
+            ], 401); 
+        }
     }
-    }
+    
+    
 
     // Handle logout process
     public function logout(Request $request)

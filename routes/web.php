@@ -7,11 +7,11 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\OwnercrudController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Middleware\AuthenticateMiddleware;
-use App\Http\Middleware\RoleMiddleware; // Assuming you have a RoleMiddleware
+use App\Http\Middleware\RoleMiddleware; 
 use Illuminate\Support\Facades\Route;
 
 // Authentication routes
-Route::prefix('auth')->name('auth.')->group(function () {
+Route::prefix('')->name('auth.')->group(function () {
     Route::get('/', [AuthController::class, 'index'])->name('index');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     
@@ -36,7 +36,7 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
             Route::get('{id}/show', [FlatcrudCrontroller::class, 'show'])->name('show');
         });
 
-        Route::prefix('ownercrud')->name('owner_crud.')->group(function () {
+        Route::prefix('flatowner')->name('owner_crud.')->group(function () {
             Route::get('/', [OwnercrudController::class, 'index'])->name('index');
             Route::get('create', [OwnercrudController::class, 'create'])->name('create');
             Route::post('store', [OwnercrudController::class, 'store'])->name('store');
