@@ -26,7 +26,7 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
 
     // Routes for Admin (role = 1)
     Route::middleware([RoleMiddleware::class . ':1'])->group(function () {
-        Route::prefix('flatcrud')->name('flatcrud.')->group(function () {
+        Route::prefix('flat')->name('flat.')->group(function () {
             Route::get('/', [FlatcrudCrontroller::class, 'index'])->name('index');
             Route::get('create', [FlatcrudCrontroller::class, 'create'])->name('create');
             Route::post('store', [FlatcrudCrontroller::class, 'store'])->name('store');

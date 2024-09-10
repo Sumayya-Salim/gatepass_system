@@ -1,9 +1,31 @@
 $(document).ready(function () {
+    $.validator.addMethod("validName", function (value, element) {
+        // Name can start with whitespace, but must have at least 3 letters followed by optional special characters
+        return /^\s*[A-Za-z]{3,}[A-Za-z\s\-\']*$/.test(value); 
+    }, "Name must have at least 3 letters, and special characters can only come after that.");    
+
     $("#parkingForm").validate({
         rules: {
             owner_name: {
                 required: true,
-                minlength: 3
+                validName: true, 
+            },
+            email: {
+                required: true,
+                email: true // Validates format of email
+            },
+            phoneno: {
+                required: true,
+                digits: true, 
+                minlength: 10, 
+                maxlength: 10
+            },
+            password: {
+                required: true,
+                minlength: 6
+            },
+            flat_no: {
+                required: true
             },
             email: {
                 required: true,
@@ -32,8 +54,8 @@ $(document).ready(function () {
         },
         messages: {
             owner_name: {
-                required: "Please enter the owner's name.",
-                minlength: "Owner's name must be at least 3 characters long."
+                required: "Name is required",
+                validName: "Name must have at least 3 letters, no special characters allowed initially."
             },
             email: {
                 required: "Please enter an email address.",
@@ -100,34 +122,40 @@ $(document).ready(function () {
                             }
                         });
                     } else {
-                        // Handle specific case for email already registered
-                        if (response.message === 'Email already registered') {
-                            Swal.fire({
-                                title: "Warning",
-                                text: response.message,
-                                icon: "warning",
-                            });
-                        } else {
-                            Swal.fire({
-                                title: "Error",
-                                text: response.message,
-                                icon: "error",
-                            });
-                        }
+                        Swal.fire({
+                            title: "Error",
+                            text: response.message,
+                            icon: "error",
+                        });
                     }
                     submitBtn.prop("disabled", false);
                     submitBtn.text("Submit");
                 },
                 error: function (xhr, status, error) {
-                    // Handle specific case for email already registered
-                    if (xhr.status === 409 && xhr.responseJSON.message === 'Email already registered') {
-                        Swal.fire({
-                            title: "Warning",
-                            text: xhr.responseJSON.message,
-                            icon: "warning",
-                        });
+                    if (xhr.status === 422) { // Laravel validation error
+                        var errors = xhr.responseJSON.errors;
+
+                        // Check if the email error exists
+                        if (errors.email) {
+                            Swal.fire({
+                                title: "Warning",
+                                text: errors.email[0], // Display email error specifically
+                                icon: "warning",
+                            });
+                        } else {
+                            // If other errors exist, collect all error messages
+                            var errorMessage = '';
+                            $.each(errors, function (key, value) {
+                                errorMessage += value[0] + '<br>'; // Collect all error messages
+                            });
+
+                            Swal.fire({
+                                title: "Validation Error",
+                                html: errorMessage, // Display other error messages in SweetAlert
+                                icon: "warning",
+                            });
+                        }
                     } else {
-                        // General error message for other issues
                         Swal.fire({
                             title: "Something went wrong",
                             text: xhr.responseJSON.message || "An unexpected error occurred.",

@@ -25,25 +25,24 @@ class SecurityController extends Controller
 
 
     public function index(Request $request)
-    {
-    
-        if ($request->ajax()) {
-            $data = User::all();
+{
+    if ($request->ajax()) {
+        // Fetch only users whose role is '3'
+        $data = User::where('role', 3)->get();
 
-            return DataTables::of($data)
-                ->addIndexColumn()
-
-               
-                ->addColumn('action', function ($row) {
-                    $btn = ' <a href="' . route('security.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
-                    $btn .= ' <a href="' . route('security.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm  onclick="return confirm(\'Are you sure?\')">DELETE</a>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-        return view('security.index');
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($row) {
+                $btn = ' <a href="' . route('security.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
+                $btn .= ' <a href="' . route('security.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">DELETE</a>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
+    return view('security.index');
+}
+
  
     /**
      * Show the form for creating a new resource.

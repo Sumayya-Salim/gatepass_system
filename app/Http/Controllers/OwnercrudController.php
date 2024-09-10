@@ -80,7 +80,7 @@ class OwnercrudController extends Controller
             if ($existingUser) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Email already registered'
+                    'message' => 'Email already registered.'
                 ], 409); // 409 Conflict HTTP status code for duplicate entry
             }
 
