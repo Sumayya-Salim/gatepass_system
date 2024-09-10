@@ -1,35 +1,57 @@
 $(document).ready(function () {
     var submitBtn = $("#updateBtn");
+    var originalData = $("#editform").serialize(); // Capture the original form data
 
     // Initially disable the submit button
     submitBtn.prop("disabled", true);
 
-    // Enable the submit button when any input changes
+    // Function to check if the form has changed
+    function checkFormChanges() {
+        var currentData = $("#editform").serialize(); // Capture the current form data
+        if (currentData === originalData) {
+            submitBtn.prop("disabled", true);
+        } else {
+            submitBtn.prop("disabled", false);
+        }
+    }
+
+    // Enable the submit button when any input or select changes
     $("#editform input, #editform select").on("input change", function () {
-        submitBtn.prop("disabled", false);
+        checkFormChanges();
     });
+
+    // Custom method to check for valid dropdown selection
+    $.validator.addMethod("validOption", function (value, element) {
+        return value !== ""; // Ensure a non-empty value is selected
+    }, "This field is required.");
 
     $("#editform").validate({
         rules: {
             flat_no: {
                 required: true,
+                pattern: /^[0-9]+[A-Za-z]{1}$/, 
             },
             flat_type: {
                 required: true,
+                validOption: true 
             },
             furniture_type: {
                 required: true,
+                validOption: true 
             },
         },
         messages: {
             flat_no: {
-                required: "Flat number is required",
+                required: "Flat Number is required",
+                pattern: "Flat Number must be a number followed by an alphabets, no numbers allowed after the alphabets.",
             },
             flat_type: {
-                required: "Please select a flat type",
+                required: "Flat Type is required",
+                validOption: "Please select a valid flat type", 
             },
             furniture_type: {
-                required: "Please select a furnish type",
+                required: "Furniture Type is required",
+                validOption: "Please select a valid furniture type",
             },
         },
         errorClass: "is-invalid text-danger",
@@ -68,6 +90,8 @@ $(document).ready(function () {
                             icon: "warning",
                         });
                     }
+                    originalData = $("#editform").serialize(); // Reset original data after successful submission
+                    submitBtn.prop("disabled", true); // Disable the button after successful submit
                 },
                 error: function (xhr, status, error) {
                     Swal.fire({

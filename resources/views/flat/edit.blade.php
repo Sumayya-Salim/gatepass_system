@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-5">
         <div class="d-flex justify-content-end mt-2">
-            <a href="{{ route('flatcrud.index') }}"><button class="btn btn-primary">BACK</button></a>
+            <a href="{{ route('flat.index') }}"><button class="btn btn-primary">BACK</button></a>
         </div>
         <form id="editform">
             @csrf
@@ -18,7 +18,7 @@
             <div class="mb-3">
                 <label for="flat_type" class="form-label">Flat Type</label>
                 <select class="form-control" id="flat_type" name="flat_type">
-                    <option>Select Flat Type</option>
+                    <option value="">Select Flat Type</option>
                     @foreach ($flat_type as $key => $flatType)
                         <option value="{{ $key }}" {{ $flat->flat_type == $key ? 'selected' : '' }}>
                             {{ $flatType }}
@@ -30,7 +30,7 @@
             <div class="mb-3">
                 <label for="furniture_type" class="form-label">Furniture Type</label>
                 <select class="form-control" id="furniture_type" name="furniture_type">
-                    <option>Select Furniture Type</option>
+                    <option value="">Select Furniture Type</option>
                     @foreach ($furniture_type as $key => $furnitureType)
                         <option value="{{ $key }}" {{ $flat->furniture_type == $key ? 'selected' : '' }}>
                             {{ $furnitureType }}
@@ -54,8 +54,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        const UPDATE_FLAT_URL = "{{ route('flatcrud.update', $flat->id) }}";
-        const dashboard_url = "{{ route('flatcrud.index') }}";
+        const UPDATE_FLAT_URL = "{{ route('flat.update', $flat->id) }}";
+        const dashboard_url = "{{ route('flat.index') }}";
     </script>
-    <script src="{{ asset('assets/js/flatcrud/update.js') }}"></script>
+    <script src="{{ asset('assets/js/flat/update.js') }}"></script>
 @endpush

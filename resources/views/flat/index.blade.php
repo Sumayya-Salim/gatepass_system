@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     @endpush
     <div class="d-flex justify-content-end mt-2">
-        <a href="{{ URL::route('flatcrud.create') }}"><button class="btn btn-primary">NEW APPLICATION</button></a><br><br>
+        <a href="{{ URL::route('flat.create') }}"><button class="btn btn-primary">NEW APPLICATION</button></a><br><br>
     </div>
     <div class="container mt-5">
         {{-- <div class="d-flex justify-content-end mt-2">
@@ -38,7 +38,7 @@
         <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min') }}"></script>
         <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min') }}"></script>
         <script>
-            const INDEX_EMPLOYEE_URL = "{{ route('flatcrud.index') }}"
+            const INDEX_EMPLOYEE_URL = "{{ route('flat.index') }}"
         </script>
-        <script src="{{ asset('assets/js/flatcrud/datatable.js') }}"></script>
+        <script src="{{ asset('assets/js/flat/datatable.js') }}"></script>
     @endpush

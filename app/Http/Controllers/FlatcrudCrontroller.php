@@ -36,9 +36,9 @@ class FlatcrudCrontroller extends Controller
                         return config('constants.furniture_type.' . $row->furniture_type);
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="' . route('flatcrud.show', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">SHOW</a>';
-                        $btn .= ' <a href="' . route('flatcrud.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
-                        $btn .= ' <a href="' . route('flatcrud.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm">DELETE</a>';
+                        $btn = '<a href="' . route('flat.show', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">SHOW</a>';
+                        $btn .= ' <a href="' . route('flat.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
+                        $btn .= ' <a href="' . route('flat.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm">DELETE</a>';
                         return $btn;
                     })
                     ->rawColumns(['action'])
@@ -48,7 +48,7 @@ class FlatcrudCrontroller extends Controller
             $flat_type = config('constants.flat_type');
             $furniture_type = config('constants.furniture_type');
 
-            return view('flatcrud.index', compact('flat_type', 'furniture_type'));
+            return view('flat.index', compact('flat_type', 'furniture_type'));
         } catch (Exception $e) {
             report($e);
         }
@@ -61,7 +61,7 @@ class FlatcrudCrontroller extends Controller
     {
         $flat_type = config('constants.flat_type');
         $furniture_type = config('constants.furniture_type');
-        return view('flatcrud.create', compact('flat_type', 'furniture_type'));
+        return view('flat.create', compact('flat_type', 'furniture_type'));
     }
 
     /**
@@ -96,7 +96,7 @@ class FlatcrudCrontroller extends Controller
         // Retrieve the Flat entry by ID
         $flat = Flat::findOrFail($id);
 
-        return view('flatcrud.show', compact('flat'));
+        return view('flat.show', compact('flat'));
     }
 
     /**
@@ -107,7 +107,7 @@ class FlatcrudCrontroller extends Controller
         $flat = Flat::findOrFail($id);
         $flat_type = config('constants.flat_type'); // Assuming flat types are stored in a config file
         $furniture_type = config('constants.furniture_type');
-        return view('flatcrud.edit', compact('flat', 'flat_type', 'furniture_type'));
+        return view('flat.edit', compact('flat', 'flat_type', 'furniture_type'));
     }
 
     /**
@@ -138,5 +138,6 @@ class FlatcrudCrontroller extends Controller
     public function destroy(string $id)
     {
         $this->flatCrudService->deleteFlat($id);
+        return redirect('flat');
     }
 }

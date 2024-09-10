@@ -3,7 +3,7 @@
 @section('content')
     <div class="container mt-5">
         <div class="d-flex justify-content-end mt-2">
-            <a href="{{ route('flatcrud.index') }}"><button class="btn btn-primary">Back to List</button></a>
+            <a href="{{ route('flat.index') }}"><button class="btn btn-primary">Back to List</button></a>
         </div>
         <h2>Flat Details</h2>
         <div class="card">

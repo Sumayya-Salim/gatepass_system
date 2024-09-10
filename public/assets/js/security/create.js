@@ -1,8 +1,14 @@
 $(document).ready(function () {
+    $.validator.addMethod("validName", function (value, element) {
+        // Name can start with whitespace, but must have at least 3 letters followed by optional special characters
+        return /^\s*[A-Za-z]{3,}[A-Za-z\s\-\']*$/.test(value); 
+    }, "Name must have at least 3 letters, and special characters can only come after that.");
+        
     $("#securityregform").validate({
         rules: {
             name: {
                 required: true,
+                validName: true,  // Custom method for name validation
             },
             email: {
                 required: true,
@@ -22,6 +28,7 @@ $(document).ready(function () {
         messages: {
             name: {
                 required: "Name is required",
+                validName: "Name must have at least 3 letters, no special characters allowed initially."
             },
             email: {
                 required: "Email is required",
@@ -53,7 +60,7 @@ $(document).ready(function () {
                 error.insertAfter(element);
             }
         },
-        ignore: [ ],
+        ignore: [],
         submitHandler: function (form) {
             var submitBtn = $("#submitBtn");
             submitBtn.prop("disabled", true);

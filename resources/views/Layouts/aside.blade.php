@@ -30,18 +30,12 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
-                              <a href="{{ route('flatcrud.index') }}" class="nav-link active">
+                              <a href="{{ route('flat.index') }}" class="nav-link active">
                                   <i class="bi bi-building-fill-add nav-icon"></i>
                                   <p>Flat List</p>
                               </a>
                           </li>
-                          <li class="nav-item">
-                              <a href="{{ route('flatcrud.create') }}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                  <p>Add details</p>
-                              </a>
-                          </li>
-                      </ul>
+                          </ul>
                   </li>
               @endif
 
@@ -121,9 +115,9 @@
               @endif
               @if (Auth::user()->role == 1 )
               <li class="nav-item">
-                <a href="{{ route('security.create') }}" class="nav-link">
+                <a href="{{ route('security.index') }}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Add Security</p>
+                    <p>Security List</p>
                 </a>
             </li>
             @endif

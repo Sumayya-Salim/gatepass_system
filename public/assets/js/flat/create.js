@@ -3,6 +3,7 @@ $(document).ready(function () {
         rules: {
             flat_no: {
                 required: true,
+                pattern: /^[0-9]+[A-Za-z]{1}$/, // Number followed by exactly two alphabets, no numbers after alphabets
             },
             flat_type: {
                 required: true,
@@ -14,6 +15,7 @@ $(document).ready(function () {
         messages: {
             flat_no: {
                 required: "Flat Number is required",
+                pattern: "Flat Number must be a number followed by an alphabets, no numbers allowed after the alphabets.",
             },
             flat_type: {
                 required: "Flat Type is required",
@@ -22,7 +24,7 @@ $(document).ready(function () {
                 required: "Furnish Type is required",
             },
         },
-        errorClass: "is-invalid text-danger",
+        errorClass: "is-invalid",
         validClass: "is-valid",
         highlight: function (element, errorClass, validClass) {
             $(element).addClass(errorClass).removeClass(validClass);
@@ -31,13 +33,9 @@ $(document).ready(function () {
             $(element).removeClass(errorClass).addClass(validClass);
         },
         errorPlacement: function (error, element) {
-            if (element.is("select")) {
-                error.insertAfter(element.closest(".form-group").children('label'));
-            } else {
-                error.insertAfter(element);
-            }
+            error.addClass('text-danger');
+            element.next('span.invalid-feedback').html(error);
         },
-        ignore: [ ],
         submitHandler: function (form) {
             var submitBtn = $("#submitBtn");
             submitBtn.prop("disabled", true);
@@ -73,11 +71,21 @@ $(document).ready(function () {
                     submitBtn.prop("disabled", false);
                     submitBtn.text("Submit");
                 },
-                error: function (xhr, status, error) {
-                    Swal.fire({
-                        title: "Something went wrong",
-                        icon: "error",
-                    });
+                error: function (xhr) {
+                    if (xhr.status === 422) { // Laravel validation error
+                        var errors = xhr.responseJSON.errors;
+                        $.each(errors, function (key, value) {
+                            var inputField = $("input[name=" + key + "], select[name=" + key + "]");
+                            inputField.addClass("is-invalid"); // Add invalid class
+                            inputField.next('.invalid-feedback').html(value[0]); // Show error message
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Something went wrong",
+                            text: xhr.responseJSON.message || "Please try again later.",
+                            icon: "error",
+                        });
+                    }
                     submitBtn.prop("disabled", false);
                     submitBtn.text("Submit");
                 },
