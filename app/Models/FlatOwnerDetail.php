@@ -15,4 +15,18 @@ class FlatOwnerDetail extends Model
         'members',
         'park_slott',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    // FlatOwner.php
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($flatowner) {
+            // Delete the associated user
+            $flatowner->user()->delete();
+        });
+    }
 }

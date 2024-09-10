@@ -5,8 +5,26 @@ $(document).ready(function () {
                 required: true,
                 minlength: 3
             },
+            email: {
+                required: true,
+                email: true // Validates format of email
+            },
+            phoneno: {
+                required: true,
+                digits: true, // Ensures only digits are entered
+                minlength: 10, // Minimum 10 digits for phone number
+                maxlength: 10 // Maximum 10 digits for phone number
+            },
+            password: {
+                required: true,
+                minlength: 6 // Minimum 6 characters for password
+            },
+            flat_no: {
+                required: true
+            },
             members: {
                 required: true,
+                digits: true // Ensures only numeric values for members
             },
             park_slott: {
                 required: true
@@ -14,16 +32,35 @@ $(document).ready(function () {
         },
         messages: {
             owner_name: {
-                required: "Please enter the owner's name",
-                minlength: "Owner's name must be at least 3 characters long"
+                required: "Please enter the owner's name.",
+                minlength: "Owner's name must be at least 3 characters long."
+            },
+            email: {
+                required: "Please enter an email address.",
+                email: "Please enter a valid email address."
+            },
+            phoneno: {
+                required: "Please enter a phone number.",
+                digits: "Please enter only digits for the phone number.",
+                minlength: "Phone number must be exactly 10 digits.",
+                maxlength: "Phone number must be exactly 10 digits."
+            },
+            password: {
+                required: "Please enter a password.",
+                minlength: "Password must be at least 6 characters long."
+            },
+            flat_no: {
+                required: "Please select a flat number."
             },
             members: {
-                required: "Please enter the member's name",
+                required: "Please specify the number of members.",
+                digits: "Please enter a valid number of members."
             },
             park_slott: {
-                required: "Please select a park slot"
+                required: "Please select a parking slot."
             }
         },
+        
         errorClass: "is-invalid text-danger",
         validClass: "is-valid",
         highlight: function (element, errorClass, validClass) {

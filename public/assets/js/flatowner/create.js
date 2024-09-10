@@ -27,6 +27,23 @@ $(document).ready(function () {
             flat_no: {
                 required: true
             },
+            email: {
+                required: true,
+                email: true
+            },
+            phoneno: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            password: {
+                required: true,
+                minlength: 6
+            },
+            flat_no: {
+                required: true
+            },
             members: {
                 required: true,
                 digits: true
