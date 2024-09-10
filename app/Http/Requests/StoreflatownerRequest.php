@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class StoreflatownerRequest extends FormRequest
 {
     /**
@@ -23,7 +24,7 @@ class StoreflatownerRequest extends FormRequest
     {
         return [
             'owner_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'phoneno' => 'required|digits:10',
             'password' => 'required|min:6',
             'flat_no' => 'required|exists:flats,id',
@@ -40,7 +41,7 @@ class StoreflatownerRequest extends FormRequest
 
             'email.required' => 'The email address is required.',
             'email.email' => 'Please provide a valid email address.',
-            'email.unique' => 'This email is already registered.',
+      
 
             'phoneno.required' => 'The phone number is required.',
             'phoneno.digits' => 'The phone number must be 10 digits.',
@@ -58,5 +59,9 @@ class StoreflatownerRequest extends FormRequest
             'park_slott.required' => 'Please select a park slot.',
             'park_slott.in' => 'The selected park slot is invalid.',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
 }

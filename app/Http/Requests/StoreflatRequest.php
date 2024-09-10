@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class StoreflatRequest extends FormRequest
 {
     /**
@@ -38,5 +39,9 @@ class StoreflatRequest extends FormRequest
         'furniture_type.required' => 'Please select a furnish type.',
         'furniture_type.in' => 'The selected furnish type is invalid.',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
 }

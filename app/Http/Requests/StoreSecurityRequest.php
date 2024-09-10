@@ -3,7 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 class StoreSecurityRequest extends FormRequest
 {
     /**
@@ -41,5 +42,9 @@ class StoreSecurityRequest extends FormRequest
             'phoneno.required' => 'Phone number is required',
             'phoneno.digits' => 'Phone number must be 10 digits long',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
     }
 }
