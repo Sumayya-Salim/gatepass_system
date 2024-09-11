@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     // Function to check if the form has changed
     function checkFormChanges() {
-        var currentData = $("#editform").serialize(); // Capture the current form data
+        var currentData = $("#editform").serialize(); 
         if (currentData === originalData) {
             submitBtn.prop("disabled", true);
         } else {
@@ -90,8 +90,8 @@ $(document).ready(function () {
                             icon: "warning",
                         });
                     }
-                    originalData = $("#editform").serialize(); // Reset original data after successful submission
-                    submitBtn.prop("disabled", true); // Disable the button after successful submit
+                    originalData = $("#editform").serialize();
+                    submitBtn.prop("disabled", true);
                 },
                 error: function (xhr, status, error) {
                     Swal.fire({

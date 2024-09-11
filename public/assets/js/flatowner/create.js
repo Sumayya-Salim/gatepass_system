@@ -139,7 +139,7 @@ $(document).ready(function () {
                         if (errors.email) {
                             Swal.fire({
                                 title: "Warning",
-                                text: errors.email[0], // Display email error specifically
+                                text: errors.email[0], 
                                 icon: "warning",
                             });
                         } else {

@@ -45,8 +45,8 @@
 
                         <div class="form-group mb-3">
                             <label for="park_slott" class="form-label">Park Slot</label>
-                            <select class="custom-select form-control-border" id="park_slott" name="park_slott">
-                                <option>Select Park Slot</option>
+                            <select class="form-control" id="park_slott" name="park_slott">
+                                <option value="">Select Park Slot</option>
                                 @foreach ($park_slott as $key => $slot)
                                     <option value="{{ $key }}" {{ $ownerDetail->park_slott == $key ? 'selected' : '' }}>
                                         {{ $slot }}
@@ -55,7 +55,7 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="btn btn-success" id="submitBtn">Update</button>
+                        <button type="submit" class="btn btn-success" id="updateBtn">Update</button>
                     </form>
                     <!-- /.card-body -->
                 </div>

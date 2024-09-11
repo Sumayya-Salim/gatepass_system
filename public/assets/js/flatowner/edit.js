@@ -1,39 +1,71 @@
 $(document).ready(function () {
+    var submitBtn = $("#updateBtn");
+    var originalData = $("#editform").serialize();;
+
+    submitBtn.prop("disabled", true);
+
+    // Function to check if form data has changed
+    function checkFormChanges() {
+        var currentData = $("#editparkingForm").serialize();
+        if (currentData === originalData) {
+            submitBtn.prop("disabled", true); // Disable if no changes
+        } else {
+            submitBtn.prop("disabled", false); // Enable if changes are made
+        }
+    }
+
+    // Monitor input, change, and keyup events on all form fields
+    $("#editparkingForm input, #editparkingForm select").on("input change", function () {
+        checkFormChanges();
+    });
+
+    // Custom validation for parking slot dropdown
+    $.validator.addMethod("validParkSlot", function (value, element) {
+        return value !== ""; // Ensure "Select Park Slot" option is not chosen
+    }, "Please select a valid parking slot.");
+
+    // Custom validation for owner name
+    $.validator.addMethod("validName", function (value, element) {
+        return /^\s*[A-Za-z]{3,}[A-Za-z\s\-\']*$/.test(value); 
+    }, "Name must have at least 3 letters, and special characters can only come after that.");
+
+    // Initialize form validation
     $("#editparkingForm").validate({
         rules: {
             owner_name: {
                 required: true,
-                minlength: 3
+                validName: true,
             },
             email: {
                 required: true,
-                email: true // Validates format of email
+                email: true
             },
             phoneno: {
                 required: true,
-                digits: true, // Ensures only digits are entered
-                minlength: 10, // Minimum 10 digits for phone number
-                maxlength: 10 // Maximum 10 digits for phone number
+                digits: true,
+                minlength: 10,
+                maxlength: 10
             },
             password: {
                 required: true,
-                minlength: 6 // Minimum 6 characters for password
+                minlength: 6
             },
             flat_no: {
                 required: true
             },
             members: {
                 required: true,
-                digits: true // Ensures only numeric values for members
+                digits: true
             },
             park_slott: {
-                required: true
+                required: true,
+                validParkSlot: true // Ensure valid parking slot is selected
             }
         },
         messages: {
             owner_name: {
                 required: "Please enter the owner's name.",
-                minlength: "Owner's name must be at least 3 characters long."
+                validName: "Name must have at least 3 letters, no special characters allowed initially."
             },
             email: {
                 required: "Please enter an email address.",
@@ -57,26 +89,22 @@ $(document).ready(function () {
                 digits: "Please enter a valid number of members."
             },
             park_slott: {
-                required: "Please select a parking slot."
+                required: "Please select a parking slot.",
+                validParkSlot: "Please select a valid parking slot."
             }
         },
         
         errorClass: "is-invalid text-danger",
-        validClass: "is-valid",
-        highlight: function (element, errorClass, validClass) {
-            $(element).addClass(errorClass).removeClass(validClass);
-        },
-        unhighlight: function (element, errorClass, validClass) {
-            $(element).removeClass(errorClass).addClass(validClass);
-        },
         errorPlacement: function (error, element) {
             error.insertAfter(element);
-            element.closest(".form-group").find(".error-label").remove();
         },
-        
+        success: function (label, element) {
+            $(element).removeClass("is-invalid");
+            $(label).remove();
+        },
         submitHandler: function (form) {
-            var submitBtn = $("#submitBtn");
-            submitBtn.prop("disabled", true).text("Please wait...");
+            submitBtn.prop("disabled", true);
+            submitBtn.text("Please wait...");
 
             var formData = new FormData($("#editparkingForm")[0]);
 
@@ -104,15 +132,19 @@ $(document).ready(function () {
                             title: response.message,
                             icon: "warning",
                         });
-                        submitBtn.prop("disabled", false).text("Submit");
                     }
+                    originalData = $("#editform").serialize();
+                    submitBtn.prop("disabled", true);
                 },
                 error: function (xhr, status, error) {
                     Swal.fire({
                         title: "Something went wrong",
                         icon: "error",
                     });
-                    submitBtn.prop("disabled", false).text("Submit");
+                },
+                    complete: function () {
+                        submitBtn.prop("disabled", false);
+                        submitBtn.text("UPDATE");
                 },
             });
         },

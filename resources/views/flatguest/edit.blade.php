@@ -1,6 +1,9 @@
 @extends('Layouts.layouts')
 
 @section('content')
+<div class="d-flex justify-content-end mt-2">
+    <a href="{{ route('flatguest.index') }}"><button class="btn btn-primary">BACK</button></a><br><br>
+</div>
     <div class="container">
         <div class="row">
             <div class="col-md-12">

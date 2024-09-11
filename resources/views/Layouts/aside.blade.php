@@ -56,13 +56,7 @@
                                   <p>All Details</p>
                               </a>
                           </li>
-                          <li class="nav-item">
-                              <a href="{{ route('owner_crud.create') }}" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Add New Members</p>
-                              </a>
-                          </li>
-                      </ul>
+                          </ul>
                   </li>
               @endif
 
@@ -83,13 +77,7 @@
                                   <p>Guest List</p>
                               </a>
                           </li>
-                          <li class="nav-item">
-                              <a href="{{ route('flatguest.create') }}" class="nav-link">
-                                  <i class="far fa-circle nav-icon"></i>
-                                  <p>Entry Form</p>
-                              </a>
-                          </li>
-                      </ul>
+                          </ul>
                   </li>
               @endif
 
