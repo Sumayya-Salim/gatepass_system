@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="flat_no">Flat Number</label>
-                                <input type="Number" class="form-control" id="flat_no" name="flat_no"
+                                <input type="text" class="form-control" id="flat_no" name="flat_no"
                                     placeholder="Enter Flat Number">
                                 <span class="invalid-feedback" role="alert"></span>
                             </div>
