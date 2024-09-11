@@ -58,7 +58,7 @@
                             </div>
 
                             <div>
-                                <button type="submit" class="btn btn-primary float-right" id="updateBtn">Update Gatepass</button>
+                                <button type="submit" class="btn btn-primary float-right" id="updateBtn">Update </button>
                             </div>
                         </div>
                     </form>

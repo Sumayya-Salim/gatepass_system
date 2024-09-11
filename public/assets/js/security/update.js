@@ -66,7 +66,7 @@ $(document).ready(function () {
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                 },
-                url: INDEX_EMPLOYEE_URL,
+                url:INDEX_SECURITY_URL,
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -100,5 +100,11 @@ $(document).ready(function () {
                 },
             });
         },
+    });
+    $('#submitBtn').prop('disabled', true);
+
+    // Enable the submit button when any input or change event occurs on the form
+    $('#securityeditform').on('input change', function () {
+        $('#submitBtn').prop('disabled', false);
     });
 });

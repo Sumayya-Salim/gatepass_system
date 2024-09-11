@@ -41,7 +41,7 @@ class FlatguestController extends Controller
                     ->addColumn('action', function ($row) {
                         // Action buttons for each row (Edit and Delete)
                         $btn = ' <a href="' . route('flatguest.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
-                        $btn .= ' <a href="' . route('flatguest.destroy', ['id' => $row->id]) . '" class="delete btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">DELETE</a>';
+                        $btn .= ' <a href="' . route('flatguest.destroy', ['id' => $row->id]) . '" class="delete btn btn-danger btn-sm" >DELETE</a>';
                         return $btn;
                     })
                     ->rawColumns(['action'])

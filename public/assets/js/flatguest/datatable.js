@@ -4,7 +4,7 @@ $(document).ready(function(){
        serverSide: true,
        ajax: INDEX_EMPLOYEE_URL,
        columns: [
-           {data: 'id', name: 'id'},
+        { data: 'DT_RowIndex', name: 'DT_RowIndex', title: 'Sl. No.' },
            {data: 'visitor_name', name: 'visitor_name'},
            {data: 'visitor_email', name: 'visitor_email'},
            {data: 'visitor_phoneno', name: 'visitor_phoneno'},
