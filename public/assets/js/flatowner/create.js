@@ -132,9 +132,15 @@ $(document).ready(function () {
                     submitBtn.text("Submit");
                 },
                 error: function (xhr, status, error) {
-                    if (xhr.status === 422) { // Laravel validation error
+                    if (xhr.status === 409) { // Email already registered
+                        Swal.fire({
+                            title: "Warning",
+                            text: "Email already registered.",
+                            icon: "warning",
+                        });
+                    } else if (xhr.status === 422) { // Laravel validation error
                         var errors = xhr.responseJSON.errors;
-
+        
                         // Check if the email error exists
                         if (errors.email) {
                             Swal.fire({
@@ -148,7 +154,7 @@ $(document).ready(function () {
                             $.each(errors, function (key, value) {
                                 errorMessage += value[0] + '<br>'; // Collect all error messages
                             });
-
+        
                             Swal.fire({
                                 title: "Validation Error",
                                 html: errorMessage, // Display other error messages in SweetAlert
@@ -167,5 +173,6 @@ $(document).ready(function () {
                 },
             });
         }
+        
     });
 });

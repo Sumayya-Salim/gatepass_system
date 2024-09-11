@@ -58,7 +58,7 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        const INDEX_EMPLOYEE_URL = "{{ route('security.update', $user->id) }}";
+        const INDEX_SECURITY_URL = "{{ route('security.update', $user->id) }}";
         const dashboard_url = "{{ route('security.index') }}";
     </script>
     <script src="{{ asset('assets/js/security/update.js') }}"></script>

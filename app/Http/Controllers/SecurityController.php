@@ -34,7 +34,7 @@ class SecurityController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 $btn = ' <a href="' . route('security.edit', ['id' => $row->id]) . '" class="edit btn btn-primary btn-sm">EDIT</a>';
-                $btn .= ' <a href="' . route('security.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm" onclick="return confirm(\'Are you sure?\')">DELETE</a>';
+                $btn .= ' <a href="' . route('security.destroy', ['id' => $row->id]) . '" class="edit btn btn-danger btn-sm">DELETE</a>';
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -57,7 +57,8 @@ class SecurityController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreSecurityRequest $request)
-    {
+    {  
+        
         try {
 
           $securityData= $this->Securityservice->storeSecurity($request);
