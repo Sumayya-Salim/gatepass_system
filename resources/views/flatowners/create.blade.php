@@ -55,7 +55,7 @@
                         <div class="form-group mb-3">
                             <label for="park_slott" class="form-label">Park Slot</label>
                             <select class="custom-select form-control-border" id="park_slott" name="park_slott">
-                                <option value="">Select Park Slot</option>
+                                <option value="">Select Park Plot</option>
                                 <option value="1">A1</option>
                                 <option value="2">A2</option>
                                 <option value="3">B1</option>

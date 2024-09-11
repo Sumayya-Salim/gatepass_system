@@ -75,6 +75,7 @@ Route::middleware(AuthenticateMiddleware::class)->group(function () {
             Route::get('otpview', [FlatguestController::class, 'otpview'])->name('otpview');
             Route::post('otpverify', [FlatguestController::class, 'otpverify'])->name('otpverify');
         });
+        
     });
 });
 
